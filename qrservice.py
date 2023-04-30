@@ -115,14 +115,14 @@ def generate():
         logo_width, logo_height = user_logo.size
         x = int((width - logo_width) / 2)
         y = int((height - logo_height) / 2)
-        img.paste(user_logo, (x, y), mask=user_logo)
+        img.paste(user_logo, (x, y))
     else:
         default_logo = Image.open('logo.png')
         default_logo.thumbnail((width/3, height/3))
         logo_width, logo_height = default_logo.size
         x = int((width - logo_width) / 2)
         y = int((height - logo_height) / 2)
-        img.paste(default_logo, (x, y), mask=default_logo)
+        img.paste(default_logo, (x, y))
     img_io = BytesIO()
     img.save(img_io, 'PNG')
     img_io.seek(0)
@@ -139,4 +139,4 @@ def decode_qr():
         return 'No QR code detected'
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=7080)
+    app.run(debug=False, host='0.0.0.0', port=7080)
