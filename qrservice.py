@@ -44,7 +44,7 @@ def index():
                 }
                 input[type=submit] {
                     width: 100%;
-                    max-width: 200px;
+                    max-width: 400px;
                     background-color: #4CAF50;
                     color: white;
                     padding: 14px 20px;
@@ -62,6 +62,12 @@ def index():
                 }
                 form {
                   margin-right: 20px;
+                }
+                @media only screen and (max-width: 600px) {
+                  input[type=submit] {
+                      padding-top: 20px;
+                      padding-bottom: 20px;
+                  }
                 }
             </style>
         </head>
