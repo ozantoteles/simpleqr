@@ -1,0 +1,12 @@
+[Unit]
+Description=QR Code Service
+After=network.target
+
+[Service]
+User=your_username
+WorkingDirectory=/path/to/app
+ExecStart=/usr/bin/python3 /path/to/app/qrservice.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
