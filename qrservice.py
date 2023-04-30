@@ -25,7 +25,26 @@ def index():
 @app.route('/generate', methods=['POST'])
 def generate():
     link = request.form['link']
-    img = qrcode.make(link)
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(link)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    img = img.convert("RGBA")
+    width, height = img.size
+
+    # Add logo to center of QR code
+    logo = Image.open("logo.png")
+    logo.thumbnail((width/3, height/3))
+    logo_width, logo_height = logo.size
+    x = int((width - logo_width) / 2)
+    y = int((height - logo_height) / 2)
+    img.paste(logo, (x, y), mask=logo)
+
     img_io = BytesIO()
     img.save(img_io, 'PNG')
     img_io.seek(0)
