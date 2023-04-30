@@ -51,6 +51,18 @@ def index():
             input[type=submit]:hover {
                 background-color: #45a049;
             }
+            @media only screen and (max-width: 600px) {
+              form {
+                  margin-left: 5%;
+                  margin-right: 5%;
+              }
+              input[type=text], input[type=file] {
+                  width: 90%;
+              }
+              input[type=submit] {
+                  width: 90%;
+              }
+            }
         </style>
         <h1>A Simple QR Code Generator and Decoder</h1>
         <h3>Generate QR Code</h3>
@@ -59,15 +71,13 @@ def index():
             <input type="file" name="logo" accept="image/*">
             <input type="submit" value="Generate QR Code">
         </form>
+        <p>To generate a QR code, enter a link in the text field and (optionally) upload a logo. Then click the "Generate QR Code" button. The generated QR code will be displayed on the screen.</p>
         <br>
         <h3>Decode QR Code</h3>
         <form action="/decode" method="post" enctype="multipart/form-data">
             <input type="file" name="qr_code" accept="image/*">
             <input type="submit" value="Decode QR Code">
         </form>
-        <br>
-        <h3>Instructions</h3>
-        <p>To generate a QR code, enter a link in the text field and (optionally) upload a logo. Then click the "Generate QR Code" button. The generated QR code will be displayed on the screen.</p>
         <p>To decode a QR code, upload an image of the QR code and click the "Decode QR Code" button. The decoded data will be displayed on the screen.</p>
     '''
 
