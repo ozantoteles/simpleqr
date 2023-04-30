@@ -9,76 +9,83 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return '''
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-            }
-            h1 {
-                background-color: #4CAF50;
-                color: white;
-                padding: 20px;
-                text-align: center;
-            }
-            h3 {
-                margin-left: 20px;
-            }
-            form {
-                margin-left: 20px;
-            }
-            input[type=text], input[type=file] {
-                width: 100%;
-                max-width: 400px;
-                box-sizing: border-box;
-                padding: 12px 20px;
-                margin: 8px 0;
-                display: inline-block;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-            }
-            input[type=submit] {
-                width: 100%;
-                max-width: 200px;
-                background-color: #4CAF50;
-                color: white;
-                padding: 14px 20px;
-                margin: 8px 0;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-            input[type=submit]:hover {
-                background-color: #45a049;
-            }
-            @media only screen and (max-width: 600px) {
-              form {
-                  margin-left: 5%;
-                  margin-right: 5%;
-              }
-              input[type=text], input[type=file] {
-                  width: 90%;
-              }
-              input[type=submit] {
-                  width: 90%;
-              }
-            }
-        </style>
-        <h1>A Simple QR Code Generator and Decoder</h1>
-        <h3>Generate QR Code</h3>
-        <form action="/generate" method="post" enctype="multipart/form-data">
-            <input type="text" name="link" placeholder="Enter link">
-            <input type="file" name="logo" accept="image/*">
-            <input type="submit" value="Generate QR Code">
-        </form>
-        <p>To generate a QR code, enter a link in the text field and (optionally) upload a logo. Then click the "Generate QR Code" button. The generated QR code will be displayed on the screen.</p>
-        <br>
-        <h3>Decode QR Code</h3>
-        <form action="/decode" method="post" enctype="multipart/form-data">
-            <input type="file" name="qr_code" accept="image/*">
-            <input type="submit" value="Decode QR Code">
-        </form>
-        <p>To decode a QR code, upload an image of the QR code and click the "Decode QR Code" button. The decoded data will be displayed on the screen.</p>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+                h1 {
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 20px;
+                    text-align: center;
+                    font-size: 24px;
+                }
+                h3 {
+                    margin-left: 20px;
+                }
+                form {
+                    margin-left: 20px;
+                }
+                input[type=text], input[type=file] {
+                    width: 100%;
+                    max-width: 400px;
+                    box-sizing: border-box;
+                    padding: 12px 20px;
+                    margin: 8px 0;
+                    display: inline-block;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+                input[type=submit] {
+                    width: 100%;
+                    max-width: 200px;
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 14px 20px;
+                    margin: 8px 0;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                input[type=submit]:hover {
+                    background-color: #45a049;
+                }
+                p {
+                  margin-left: 20px;
+                  margin-right: 20px;
+                }
+                form {
+                  margin-right: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>A Simple QR Code Generator and Decoder</h1>
+            <h3>Generate QR Code</h3>
+            <p>To generate a QR code, enter a link in the text field and (optionally) upload a logo.</p> 
+            <p>Then click the "Generate QR Code" button. The generated QR code will be displayed on the screen.</p>
+            <form action="/generate" method="post" enctype="multipart/form-data">
+                <input type="text" name="link" placeholder="Enter link"><br>
+                <label for="logo">Choose a PNG Logo File:</label><br>
+                <input type="file" id="logo" name="logo" accept="image/*"><br>
+                <input type="submit" value="Generate QR Code">
+            </form>
+            <br>
+            <h3>Decode QR Code</h3>
+            <p>To decode a QR code, upload an image of the QR code and click the "Decode QR Code" button.</p>
+            <p>The decoded data will be displayed on the screen.</p>
+            <form action="/decode" method="post" enctype="multipart/form-data">
+                <input type="file" name="qr_code" accept="image/*"><br>
+                <input type="submit" value="Decode QR Code"><br>
+            </form>
+        </body>
+        </html>
     '''
 
 @app.route('/generate', methods=['POST'])
