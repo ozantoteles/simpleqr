@@ -29,7 +29,7 @@ def generate():
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
         box_size=10,
-        border=4,
+        border=0,  # Set border size to 0
     )
     qr.add_data(link)
     qr.make(fit=True)
