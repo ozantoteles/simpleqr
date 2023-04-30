@@ -109,7 +109,8 @@ def generate():
     img = qr.make_image(fill_color="black", back_color="white").convert("RGBA")
     width, height = img.size
     logo_img = Image.open(logo) if logo else Image.open('logo.png')
-    logo_img.thumbnail((width/3, height/3))
+    logo_img = logo_img.convert('RGBA')
+    logo_img.thumbnail((width/3.2, height/3.2))
     logo_width, logo_height = logo_img.size
     x, y = int((width - logo_width) / 2), int((height - logo_height) / 2)
     img.paste(logo_img, (x, y))
