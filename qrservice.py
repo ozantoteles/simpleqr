@@ -54,41 +54,52 @@ def index():
         </style>
         <h1>A Simple QR Code Generator and Decoder</h1>
         <h3>Generate QR Code</h3>
-        <form action="/generate" method="post">
+        <form action="/generate" method="post" enctype="multipart/form-data">
             <input type="text" name="link" placeholder="Enter link">
+            <input type="file" name="logo" accept="image/*">
             <input type="submit" value="Generate QR Code">
         </form>
         <br>
         <h3>Decode QR Code</h3>
         <form action="/decode" method="post" enctype="multipart/form-data">
-            <input type="file" name="qr_code">
+            <input type="file" name="qr_code" accept="image/*">
             <input type="submit" value="Decode QR Code">
         </form>
+        <br>
+        <h3>Instructions</h3>
+        <p>To generate a QR code, enter a link in the text field and (optionally) upload a logo. Then click the "Generate QR Code" button. The generated QR code will be displayed on the screen.</p>
+        <p>To decode a QR code, upload an image of the QR code and click the "Decode QR Code" button. The decoded data will be displayed on the screen.</p>
     '''
 
 @app.route('/generate', methods=['POST'])
 def generate():
     link = request.form['link']
+    logo = request.files.get('logo')
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
         box_size=10,
-        border=0,
+        border=1,
     )
     qr.add_data(link)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
     img = img.convert("RGBA")
     width, height = img.size
-
-    # Add logo to center of QR code
-    logo = Image.open("logo.png")
-    logo.thumbnail((width/3, height/3))
-    logo_width, logo_height = logo.size
-    x = int((width - logo_width) / 2)
-    y = int((height - logo_height) / 2)
-    img.paste(logo, (x, y), mask=logo)
-
+    if logo:
+        user_logo = Image.open(logo)
+        user_logo.thumbnail((width/3, height/3))
+        logo_width, logo_height = user_logo.size
+        x = int((width - logo_width) / 2)
+        y = int((height - logo_height) / 2)
+        img.paste(user_logo, (x, y), mask=user_logo)
+    else:
+        default_logo = Image.open('logo.png')
+        default_logo.thumbnail((width/3, height/3))
+        logo_width, logo_height = default_logo.size
+        x = int((width - logo_width) / 2)
+        y = int((height - logo_height) / 2)
+        img.paste(default_logo, (x, y), mask=default_logo)
     img_io = BytesIO()
     img.save(img_io, 'PNG')
     img_io.seek(0)
