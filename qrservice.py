@@ -9,6 +9,26 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return '''
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            h1 {
+                background-color: #4CAF50;
+                color: white;
+                padding: 20px;
+                text-align: center;
+            }
+            h3 {
+                margin-left: 20px;
+            }
+            form {
+                margin-left: 20px;
+            }
+        </style>
+        <h1>QR Code Generator</h1>
         <h3>Generate QR Code</h3>
         <form action="/generate" method="post">
             <input type="text" name="link" placeholder="Enter link">
@@ -29,7 +49,7 @@ def generate():
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
         box_size=10,
-        border=0,  # Set border size to 0
+        border=0,
     )
     qr.add_data(link)
     qr.make(fit=True)
