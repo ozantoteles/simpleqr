@@ -28,7 +28,7 @@ def index():
                 margin-left: 20px;
             }
         </style>
-        <h1>QR Code Generator</h1>
+        <h1>A Simple QR Code Generator and Decoder</h1>
         <h3>Generate QR Code</h3>
         <form action="/generate" method="post">
             <input type="text" name="link" placeholder="Enter link">
@@ -81,4 +81,4 @@ def decode_qr():
         return 'No QR code detected'
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=7080)
