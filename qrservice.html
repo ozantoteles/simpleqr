@@ -79,7 +79,12 @@
                 document.getElementById("logo").disabled = true;
               }
             }
-            </script>
+            
+            window.onload = function() {
+              document.getElementById("add_logo").addEventListener("change", enableLogoInput);
+            };
+        </script>
+        <br>
         <input type="submit" value="Generate QR Code">
     </form>
     <br>
