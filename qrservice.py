@@ -16,6 +16,7 @@ def index():
 def generate():
     link = request.form['link']
     logo = request.files.get('logo')
+    add_logo = request.form.get('add_logo')
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -26,12 +27,13 @@ def generate():
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white").convert("RGBA")
     width, height = img.size
-    logo_img = Image.open(logo) if logo else Image.open('logo.png')
-    logo_img = logo_img.convert('RGBA')
-    logo_img.thumbnail((width/3.2, height/3.2))
-    logo_width, logo_height = logo_img.size
-    x, y = int((width - logo_width) / 2), int((height - logo_height) / 2)
-    img.paste(logo_img, (x, y))
+    if add_logo:
+        logo_img = Image.open(logo) if logo else Image.open('logo.png')
+        logo_img = logo_img.convert('RGBA')
+        logo_img.thumbnail((width/3.2, height/3.2))
+        logo_width, logo_height = logo_img.size
+        x, y = int((width - logo_width) / 2), int((height - logo_height) / 2)
+        img.paste(logo_img, (x, y))
     img_io = BytesIO()
     img.save(img_io, 'PNG')
     img_io.seek(0)

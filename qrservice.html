@@ -9,7 +9,7 @@
             padding: 0;
         }
         h1 {
-            background-color: #4CAF50;
+            background-color: #4b1c77;
             color: white;
             padding: 20px;
             text-align: center;
@@ -34,7 +34,7 @@
         input[type=submit] {
             width: 100%;
             max-width: 400px;
-            background-color: #4CAF50;
+            background-color: #4b1c77;
             color: white;
             padding: 14px 20px;
             margin: 8px 0;
@@ -43,7 +43,7 @@
             cursor: pointer;
         }
         input[type=submit]:hover {
-            background-color: #45a049;
+            background-color: #4b1c77;
         }
         p {
             margin-left: 20px;
@@ -67,8 +67,19 @@
     <p>Then click the "Generate QR Code" button. The generated QR code will be displayed on the screen.</p>
     <form action="/generate" method="post" enctype="multipart/form-data">
         <input type="text" name="link" placeholder="Enter link"><br>
-        <label for="logo">Choose a PNG Logo File:</label><br>
-        <input type="file" id="logo" name="logo" accept="image/*"><br>
+        <input type="checkbox" name="add_logo" id="add_logo" onchange="enableLogoInput()">
+        <label for="add_logo">Add logo, use default logo or choose a PNG file</label>
+        <br>
+        <input type="file" id="logo" name="logo" accept="image/*" disabled>
+        <script>
+            function enableLogoInput() {
+              if (document.getElementById("add_logo").checked) {
+                document.getElementById("logo").disabled = false;
+              } else {
+                document.getElementById("logo").disabled = true;
+              }
+            }
+            </script>
         <input type="submit" value="Generate QR Code">
     </form>
     <br>
